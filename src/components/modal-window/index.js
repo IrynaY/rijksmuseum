@@ -3,19 +3,7 @@ import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0; bottom: 0; left: 0; right: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-`;
-
-const ModalWindowStyled = styled.div`
-  padding: 50px 60px;
-  position: absolute;
-  top: 50%; left: 50%;
-  background-color: white;
-  transform: translate(-50%, -50%);
-`;
+import Button from '../button';
 
 class ModalWindow extends React.Component {
 
@@ -35,13 +23,14 @@ class ModalWindow extends React.Component {
     return (
       <>
         {ReactDOM.createPortal(
-          <ModalOverlay>
-            <ModalWindowStyled>
-              <button onClick={onClose}>X</button>
+          <ModalStyled>
+            <div className='window'>
+              <div className='header'>
+                <Button onClick={onClose}>X</Button>
+              </div>
               {children}
-              <button onClick={onClose}>Close</button>
-            </ModalWindowStyled>
-          </ModalOverlay>,
+            </div>
+          </ModalStyled>,
           document.body)}
       </>
     );
@@ -50,10 +39,31 @@ class ModalWindow extends React.Component {
 
 ModalWindow.propTypes = {
   children: PropTypes.node,
+  onClose: PropTypes.func
 };
 
 ModalWindow.defaultProps = {
   children: ''
 };
+
+const ModalStyled = styled.div`
+  position: fixed;
+  top: 0; bottom: 0; left: 0; right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .window {
+    padding: 10px;
+    position: absolute;
+    top: 50%; left: 50%;
+    background-color: white;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+
+    .header {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+`;
 
 export default ModalWindow;

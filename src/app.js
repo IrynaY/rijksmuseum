@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Route, Switch} from 'react-router-dom';
+import { HashRouter as Router, Route, Switch} from 'react-router-dom';
 
 import { HomePage, ObjectPage, NoMatchPage } from './pages';
 
@@ -22,8 +22,8 @@ const routes = [
   },
 ];
 
-const Router = () =>
-  <HashRouter>
+const App = () =>
+  <Router>
     <Switch>
       {routes.map(({ path, name, component, exact }) =>
         <Route
@@ -34,6 +34,6 @@ const Router = () =>
         />
       )}
     </Switch>
-  </HashRouter>;
+  </Router>;
 
-export default Router;
+export default App;

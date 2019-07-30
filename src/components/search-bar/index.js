@@ -1,5 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+
+import Button from '../button';
 
 const ORDER_TYPES = {
   relevance: 'Relevance',
@@ -10,14 +13,6 @@ const ORDER_TYPES = {
   artistdesc: 'Artist Z > A',
 };
 
-const SearchBarStyled = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-  padding: 5px;
-`;
-
 const SearchBar = ({ onSearchSubmit, onOrderApply }) => {
 
   const formOnSubmit = event => {
@@ -27,18 +22,35 @@ const SearchBar = ({ onSearchSubmit, onOrderApply }) => {
 
   return (
     <SearchBarStyled>
-      <select onChange={onOrderApply}>
+      <Button as='select' onChange={onOrderApply}>
         {Object.keys(ORDER_TYPES).map( key =>
           <option value={key} key={key}> {ORDER_TYPES[key]} </option>
         )}
-      </select>
+      </Button>
       <form onSubmit={formOnSubmit}>
-        <input type='search' name='keyword' placeholder='Search keyword...' />
-        <button>Search</button>
+        <Button 
+          as='input' 
+          type='search' 
+          name='keyword' 
+          placeholder='Search keyword...'
+        />
+        <Button bgcolor='#F15F45'>Search</Button>
       </form>
     </SearchBarStyled>
   );
 };
 
-export default SearchBar;
+SearchBar.propTypes = {
+  onSearchSubmit: PropTypes.func,
+  onOrderApply: PropTypes.func,
+};
 
+const SearchBarStyled = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding: 5px;
+`;
+
+export default SearchBar;

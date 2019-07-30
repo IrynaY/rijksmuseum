@@ -1,7 +1,9 @@
-import { FETCH_COLLECTIONS, SET_ORDER, SET_KEYWORD, SET_CURRENT_PAGE, SET_PER_PAGE } from './constants';
+import { 
+  FETCH_COLLECTIONS, FETCH_FAVOURITES, SET_ORDER, SET_KEYWORD, SET_CURRENT_PAGE, SET_PER_PAGE, UPDATE_FAVOURITES
+} from './constants';
 
 const initialState = {
-  collections: [],
+  collections: {},
   favourites: [],
   order: '',
   keyword: '',
@@ -16,13 +18,24 @@ export default function reducer (state = initialState, action) {
     case FETCH_COLLECTIONS:
       return {
         ...state,
-        collections: payload.list,
+        collections: payload.collections,
+        totalPages: Math.ceil(payload.count / payload.perPage)
+      };
+    case FETCH_FAVOURITES:
+      return {
+        ...state,
+        collections: payload.collections,
         totalPages: Math.ceil(payload.count / payload.perPage)
       };
     case SET_ORDER:
       return {
         ...state,
         order: payload.order
+      };
+    case UPDATE_FAVOURITES:
+      return {
+        ...state,
+        favourites: [...payload.favourites]
       };
     case SET_KEYWORD:
       return {

@@ -1,29 +1,89 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
-import Image from '../../components/image';
+import Button from '../../components/button';
 
 import { fetchObject } from '../../utils';
+import { getCollectionsByKeyword } from '../../actions';
 
-const ObjectPage = ({ match: { params : { id } } }) => {
-  const [details, setDetails] = useState(0);
+const ObjectPageContainer = ({ match: { params : { id } }, getCollectionsByKeyword }) => {
+  const [details, setDetails] = useState();
 
   useEffect( () => {
     const fetchData = async () => {
-      const { artObject: { title,  webImage: { url } } } = await fetchObject(id);
-      setDetails({ title, url });
+      console.log(await fetchObject(id));
+      let { 
+        artObject: { description, objectTypes, title,  webImage: { url } },
+        artObjectPage: { tags }
+      } = await fetchObject(id);
+      url.replace('s0', 's300');
+      setDetails({ objectTypes, title, url, description, tags });
     };
-
     fetchData();
   }, [id]);
 
-  return (
+  const handleSearch = ({target: { name }}) => getCollectionsByKeyword(name);
 
-    <div>
-      <h3>ID: {id}</h3>
-      <h3>ID: {details.title}</h3>
-      <Image src={details.url} alt={details.title} size={{width: '300px', height: 'auto'}}/>
-    </div>
+  return (
+    <>
+       {details && 
+        <ObjectPageStyled>
+          <h3>{details.title}</h3>
+          <div>
+            <img src={details.url} alt={details.title}/>
+            <p>{details.description}</p>
+            <p>Types:</p>
+            {details.objectTypes.map(item => 
+              <Button 
+                as={Link} 
+                key={item} 
+                onClick={handleSearch}
+                name={item}
+                to='/'
+              >
+                {item}
+              </Button>
+            )}
+            <p>Tags: {details.tags}</p>
+            {details.tags.map(item => 
+              <Button 
+                as={Link} 
+                key={item} 
+                onClick={handleSearch}
+                name={item}
+                to='/'
+              >
+                {item}
+              </Button>
+            )}
+          </div> 
+        </ObjectPageStyled>
+       }
+    </>
   );
 };
 
-export default ObjectPage;
+ObjectPageContainer.propTypes = {
+  match: PropTypes.string,
+  getCollectionsByKeyword: PropTypes.func
+};
+
+const ObjectPageStyled = styled.div`
+  text-align: center;
+  padding: 50px;
+  
+  img {
+    margin: 0 10px 5px 5px; 
+    max-width: 25%;
+    float:left;
+    height: auto;
+  }
+`;
+
+export default connect(
+  () => ({}), { getCollectionsByKeyword }
+)(ObjectPageContainer);
+

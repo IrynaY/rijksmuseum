@@ -1,5 +1,12 @@
 export const FETCH_COLLECTIONS = 'FETCH_COLLECTIONS';
+
+export const FETCH_FAVOURITES = 'FETCH_FAVOURITES';
+export const UPDATE_FAVOURITES = 'UPDATE_FAVOURITES';
+
 export const SET_ORDER = 'SET_ORDER';
+
 export const SET_KEYWORD = 'SET_KEYWORD';
+
 export const SET_CURRENT_PAGE = 'SET_CURRENT_PAGE';
+
 export const SET_PER_PAGE = 'SET_PER_PAGE';

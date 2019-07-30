@@ -1,53 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 import ModalWindow from '../modal-window';
-import Image from '../image';
 import Button from '../button';
 
-const TileStyled = styled.div`
-  min-width: 180px;
-  height: 180px;
-  margin: 10px;
-  text-align: center;
-  position: relative;
-  background: url(${props => props.src}) no-repeat center;
-  background-size: cover;
-`;
-
-const HoverStyled = styled.div`
-  height: 50%;
-  top: 50%;
-  position: absolute;
-  background-color: #F7F4F4;
-  display: flex;
-  align-items: center;
-`;
-
-const TextStyled = styled.div`
-  display: block;
-  text-overflow: ellipsis;
-  word-wrap: break-word;
-  overflow: hidden;
-  font-size: 14px;
-  line-height: 16px;
-`;
-
-const FavouriteStyled = styled(Button)`
-  color: ${props => props.active ? 'orange' : 'white'};
-`;
-
-const Tile = ({ id, headerImage, webImage, title, description }) => {
+const Tile = ({ id, headerImage, webImage, title, description, onUpdateFavourites, favourite }) => {
 
   const [isHover, setHover] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const [isFavourite, setFavourite] = useState(false);
 
   const handleMouseHover = () => setHover(!isHover);
+
   const handleOpenModal = () => setOpen(true);
   const handleCLoseModal = () => setOpen(false);
-  const handleFavourite = () => setFavourite(!isFavourite);
+
+  const handleUpdateFavourite = () => {
+    setFavourite(!isFavourite);
+    onUpdateFavourites(id);
+  };
+
+  useEffect( () => {
+    if(favourite) setFavourite(true);
+  }, []);
 
   return (
     <>
@@ -55,34 +32,128 @@ const Tile = ({ id, headerImage, webImage, title, description }) => {
         onMouseEnter={handleMouseHover}
         onMouseLeave={handleMouseHover}
         onClick={handleOpenModal}
-        src={headerImage}
+        path={headerImage}
       >
-
         {isHover &&
-          <HoverStyled>
-            <TextStyled>{description}</TextStyled>
-          </HoverStyled>
+          <div className='short-description'>
+            <p>{description}</p>
+          </div>
         }
       </TileStyled>
 
       {isOpen &&
         <ModalWindow onClose={handleCLoseModal} isOpen={isOpen}>
-          <p>Title: {title}</p>
+          <DetailsStyled>
+            <span className='title'>{title}</span>
+            <p>
+              <img src={webImage} alt={title}/>
+              {description}
+            </p>
 
-          {webImage && <Image src={webImage} alt={title} size={{width: 'auto', height: '300px'}}/>}
-          {!webImage &&  <p>NoImg</p>}
-
-          <p>Description: {description}</p>
-
-          <FavouriteStyled onClick={handleFavourite} active={isFavourite}>
-            Add to fav list
-          </FavouriteStyled>
-
-          <Link to={`object/${id}`}>View more details</Link>
+            <div className='btn-group'>
+              <div className='left'>
+                <FavouriteButton width='130px' onClick={handleUpdateFavourite} active={isFavourite}>
+                  {isFavourite ? 'Favourite' : 'Mark as favourite'}
+                </FavouriteButton>
+                <LinkStyled as={Link} to={`object/${id}`} width='130px'>View more details</LinkStyled>
+              </div>
+              <div className='right'>
+                <Button onClick={handleCLoseModal} width='130px'>Close</Button>
+              </div>
+            </div>
+          </DetailsStyled>
         </ModalWindow>
       }
     </>
   );
 };
+
+Tile.propTypes = {
+  id: PropTypes.string,
+  headerImage: PropTypes.string,
+  webImage: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.string,
+  onUpdateFavourites: PropTypes.func,
+  favourite: PropTypes.bool
+};
+
+Tile.defaultProps = {
+  favourite: false,
+};
+
+const TileStyled = styled.div`
+  min-width: 180px;
+  height: 180px;
+  margin: 10px;
+  text-align: center;
+  position: relative;
+  background: url(${props => props.path}) no-repeat center;
+  background-size: auto 100%;
+  background-color: #e2e2e2;
+
+  .short-description {
+    height: 50%; width: 100%;
+    top: 50%;
+    position: absolute;
+    background-color: #ececec;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0.8;
+
+    p {
+      display: block;
+      text-overflow: ellipsis;
+      word-wrap: break-word;
+      overflow: hidden;
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }
+`;
+
+const LinkStyled = styled(Button)`
+  padding: 10px 0;
+  display: block;
+  width: ${props => props.width};
+`;
+
+const FavouriteButton = styled(Button)`
+  background-color: ${props => props.active ? 'yellow' : '#f15f45'};
+`;
+
+const DetailsStyled = styled.div`
+  width: 500px;
+  padding: 0 10px 10px 10px;
+  display: flex;
+  flex-direction: column;
+
+  img {
+    margin: 0 10px 5px 5px; 
+    max-width: 250px;
+    float:left;
+  }
+  
+  .title {
+    font-weight: bold;
+    text-align: center;
+  }
+
+  .btn-group {
+    display: flex;
+
+    .left {
+      flex-basis: 50%;
+    }
+
+    .right {
+      flex-basis: 50%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+  }
+`;
 
 export default Tile;

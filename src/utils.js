@@ -1,6 +1,5 @@
 const API_KEY = 'x7YBMwPb';
 const RIJK_URL = 'https://www.rijksmuseum.nl/api/nl/collection/';
-// const BASE_PARAMS = new URLSearchParams([['key', API_KEY],['format', 'json']]);
 const ALLOWED_PARAMS = ['q', 's', 'p', 'ps'];
 
 const fetchy = uri => fetch(uri).then(resp => {
