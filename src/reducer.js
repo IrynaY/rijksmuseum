@@ -5,9 +5,9 @@ import {
 const initialState = {
   collections: {},
   favourites: [],
-  order: '',
+  order: 'relevance',
   keyword: '',
-  totalPages: '',
+  totalPages: 0,
   currentPage: 1,
   perPage: 10,
 };

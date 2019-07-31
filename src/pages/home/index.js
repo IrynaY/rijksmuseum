@@ -65,6 +65,8 @@ const HomePageContainer = ({
           <SearchBar
             onSearchSubmit={handleSearch}
             onOrderApply={handleOrder}
+            search={keyword}
+            // order={order}
           />
         </div>
 
@@ -91,11 +93,9 @@ const HomePageContainer = ({
   );
 };
 
-
 HomePageContainer.propTypes = {
   collections: PropTypes.object,
   favourites: PropTypes.array,
-  totalPages: PropTypes.number,
   currentPage: PropTypes.number,
   perPage: PropTypes.number,
   keyword: PropTypes.string,
@@ -106,6 +106,7 @@ HomePageContainer.propTypes = {
   getCollectionsByOrder: PropTypes.func,
   getCollectionsByPage: PropTypes.func,
   updateFavourites: PropTypes.func,
+  totalPages: PropTypes.number
 };
 
 HomePageContainer.defaultProps = {
@@ -156,8 +157,8 @@ const FavouritesButton = styled(Button)`
 `;
 
 export default connect(
-  ({ collections, favourites, totalPages, currentPage, perPage, keyword }) => 
-    ({ collections, favourites, totalPages, currentPage, perPage, keyword }),
+  ({ collections, favourites, totalPages, currentPage, perPage, keyword, order }) => 
+    ({ collections, favourites, totalPages, currentPage, perPage, keyword, order }),
   { 
     getCollections, 
     getCollectionsByKeyword, 

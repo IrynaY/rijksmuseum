@@ -14,7 +14,6 @@ const ObjectPageContainer = ({ match: { params : { id } }, getCollectionsByKeywo
 
   useEffect( () => {
     const fetchData = async () => {
-      console.log(await fetchObject(id));
       let { 
         artObject: { description, objectTypes, title,  webImage: { url } },
         artObjectPage: { tags }
@@ -67,7 +66,7 @@ const ObjectPageContainer = ({ match: { params : { id } }, getCollectionsByKeywo
 };
 
 ObjectPageContainer.propTypes = {
-  match: PropTypes.string,
+  match: PropTypes.any,
   getCollectionsByKeyword: PropTypes.func
 };
 

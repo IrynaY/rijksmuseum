@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect} from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
@@ -13,18 +13,28 @@ const ORDER_TYPES = {
   artistdesc: 'Artist Z > A',
 };
 
-const SearchBar = ({ onSearchSubmit, onOrderApply }) => {
+const SearchBar = ({ onSearchSubmit, onOrderApply, search }) => {
+
+  const [searchState, setSearchState] = useState('');
+
+  useEffect(() => {
+    setSearchState(search);
+  }, []);
 
   const formOnSubmit = event => {
     event.preventDefault();
     onSearchSubmit(event);
   };
 
+  const handleChangeSearh = ({ target: { value } }) => setSearchState(value);
+
   return (
     <SearchBarStyled>
       <Button as='select' onChange={onOrderApply}>
         {Object.keys(ORDER_TYPES).map( key =>
-          <option value={key} key={key}> {ORDER_TYPES[key]} </option>
+          <option value={key} key={key}> 
+            {ORDER_TYPES[key]} 
+          </option>
         )}
       </Button>
       <form onSubmit={formOnSubmit}>
@@ -33,6 +43,8 @@ const SearchBar = ({ onSearchSubmit, onOrderApply }) => {
           type='search' 
           name='keyword' 
           placeholder='Search keyword...'
+          value={searchState}
+          onChange={handleChangeSearh}
         />
         <Button bgcolor='#F15F45'>Search</Button>
       </form>
@@ -43,6 +55,7 @@ const SearchBar = ({ onSearchSubmit, onOrderApply }) => {
 SearchBar.propTypes = {
   onSearchSubmit: PropTypes.func,
   onOrderApply: PropTypes.func,
+  search: PropTypes.string
 };
 
 const SearchBarStyled = styled.div`
