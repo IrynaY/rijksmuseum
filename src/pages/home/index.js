@@ -22,7 +22,7 @@ const HomePageContainer = ({
   collections, favourites, totalPages, currentPage, perPage, updatePerPageView, getFavourites, keyword,
   getCollections, getCollectionsByKeyword, getCollectionsByOrder, getCollectionsByPage, updateFavourites
 }) => {
-  
+
   const [favouritesMode, setFavouritesMode] = useState(false);
 
   useEffect( () => {
@@ -44,7 +44,7 @@ const HomePageContainer = ({
   const handlePerPage = ({ target: { value } }) => updatePerPageView(+value);
 
   const handleFavourites = id => updateFavourites(id);
-  
+
   const handleShowFavourites = () => {
     if(favouritesCount > 0)
       setFavouritesMode(!favouritesMode);
@@ -55,12 +55,12 @@ const HomePageContainer = ({
       <div className='content'>
         <div className='header'>
           <div className='right'>
-            <FavouritesButton 
+            <FavouritesButton
               onClick={handleShowFavourites}
               active={favouritesMode}
             >
-              {favouritesCount > 0 
-                ? <>Fav <span className='circle'>{favouritesCount}</span></> 
+              {favouritesCount > 0
+                ? <>Fav <span className='circle'>{favouritesCount}</span></>
                 : 'No favourite items yet'
               }
             </FavouritesButton>
@@ -73,14 +73,14 @@ const HomePageContainer = ({
           />
         </div>
 
-        <TileList 
+        <TileList
           list={collections}
           onUpdateFavourites={handleFavourites}
           message={favouritesMode ? 'No favourite itmes yet' :'No art object could be found by your query'}
         />
 
         <div className='footer'>
-          {totalPages > 0 && 
+          {totalPages > 0 &&
             <Pagination
               totalPages={+totalPages}
               currentPage={+currentPage}
@@ -133,7 +133,7 @@ const HomePageStyled = styled.div`
       display: flex;
       flex-direction: column;
     }
-  
+
     .right {
       display: flex;
       justify-content: flex-end;
@@ -149,10 +149,6 @@ const HomePageStyled = styled.div`
       display: flex;
       margin: 10px;
       flex-direction: column;
-    }
-
-    .tile-modal {
-      width: 300px;
     }
   }
 `;
@@ -172,14 +168,14 @@ const FavouritesButton = styled(Button)`
 `;
 
 export default connect(
-  ({ collections, favourites, totalPages, currentPage, perPage, keyword, order }) => 
+  ({ collections, favourites, totalPages, currentPage, perPage, keyword, order }) =>
     ({ collections, favourites, totalPages, currentPage, perPage, keyword, order }),
-  { 
-    getCollections, 
-    getCollectionsByKeyword, 
-    getCollectionsByOrder, 
-    updatePerPageView, 
-    getCollectionsByPage, 
+  {
+    getCollections,
+    getCollectionsByKeyword,
+    getCollectionsByOrder,
+    updatePerPageView,
+    getCollectionsByPage,
     updateFavourites,
     getFavourites
   }

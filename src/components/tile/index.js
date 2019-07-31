@@ -125,17 +125,17 @@ const FavouriteButton = styled(Button)`
 `;
 
 const DetailsStyled = styled.div`
-  width: 500px;
+  width: 100%;
   padding: 0 10px 10px 10px;
   display: flex;
   flex-direction: column;
 
   img {
-    margin: 0 10px 5px 5px; 
+    margin: 0 10px 5px 5px;
     max-width: 250px;
     float:left;
   }
-  
+
   .title {
     font-weight: bold;
     text-align: center;

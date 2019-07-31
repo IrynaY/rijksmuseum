@@ -58,10 +58,17 @@ const ModalStyled = styled.div`
     background-color: white;
     transform: translate(-50%, -50%);
     overflow: hidden;
+    width: 500px;
 
     .header {
       display: flex;
       justify-content: flex-end;
+    }
+  }
+
+  @media screen and (max-width: 425px) {
+    .window {
+      width: 300px;
     }
   }
 `;
