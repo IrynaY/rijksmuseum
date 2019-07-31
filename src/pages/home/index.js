@@ -143,6 +143,18 @@ const HomePageStyled = styled.div`
       // flex: 0 0 auto;
     }
   }
+
+  @media screen and (max-width: 425px) {
+    .search-bar {
+      display: flex;
+      margin: 10px;
+      flex-direction: column;
+    }
+
+    .tile-modal {
+      width: 300px;
+    }
+  }
 `;
 
 const FavouritesButton = styled(Button)`

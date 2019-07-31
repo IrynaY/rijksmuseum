@@ -29,7 +29,7 @@ const SearchBar = ({ onSearchSubmit, onOrderApply, search }) => {
   const handleChangeSearh = ({ target: { value } }) => setSearchState(value);
 
   return (
-    <SearchBarStyled>
+    <SearchBarStyled className='search-bar'>
       <Button as='select' onChange={onOrderApply}>
         {Object.keys(ORDER_TYPES).map( key =>
           <option value={key} key={key}> 

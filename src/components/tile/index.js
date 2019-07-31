@@ -33,6 +33,7 @@ const Tile = ({ id, headerImage, webImage, title, description, onUpdateFavourite
         onMouseLeave={handleMouseLeave}
         onClick={handleOpenModal}
         path={headerImage}
+        className='tile'
       >
         {isHover &&
           <div className='short-description'>
@@ -43,7 +44,7 @@ const Tile = ({ id, headerImage, webImage, title, description, onUpdateFavourite
 
       {isOpen &&
         <ModalWindow onClose={handleCLoseModal} isOpen={isOpen}>
-          <DetailsStyled>
+          <DetailsStyled className='tile-modal'>
             <span className='title'>{title}</span>
             <p>
               <img src={webImage} alt={title}/>
