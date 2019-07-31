@@ -16,18 +16,18 @@ const fetchCollectionsAction = ( collections,  count, perPage ) =>
 export const getCollections = () => async (dispatch, getState) => {
   const { keyword: q, order: s, currentPage: p, perPage: ps, favourites } = getState();
   const { artObjects, count } = await fetchCollectionList({q, s, p, ps});
+
   const collections = artObjects.reduce( (obj, item) => {
     obj[item.objectNumber] = {
       webImage: item.webImage ? item.webImage.url : null ,
       headerImage: item.headerImage ? item.headerImage.url : null,
       title: item.title,
       longTitle: item.longTitle,
-      artist: item.principalOrFirstMaker,
-      // favourite: favourites.includes(item.objectNumber) principalOrFirstMaker
       favourite: favourites[item.objectNumber]
     };
     return obj;
   }, {}); 
+
   dispatch(fetchCollectionsAction(collections, count, ps));
 };
 
@@ -60,9 +60,10 @@ export const updateFavourites = id => async (dispatch, getState) => {
 };
 
 export const getFavourites = () => async (dispatch, getState) => {
-  const favouritesCollection = {};
   const { favourites } = getState();
   const promises = favourites.map( id => fetchCollectionList({ q: id }));
+  
+  const favouritesCollection = {};
 
   Promise.all(promises).then(collectionsList => { 
     collectionsList.forEach( ({artObjects: [item]}) => {
@@ -78,4 +79,3 @@ export const getFavourites = () => async (dispatch, getState) => {
     dispatch(fetchCollectionsAction([], 0));
   });
 };
-

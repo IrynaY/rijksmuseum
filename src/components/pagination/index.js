@@ -6,10 +6,10 @@ const PER_PAGE_VALUES = [10, 50, 100];
 
 const Pagination = ({ totalPages, currentPage, itemsOnPage, onPageChange, onPerPageChange, className }) => {
 
-  const goToPage = ( event ) => {
-    if(event.target.name === 'next' && currentPage !== totalPages)
+  const goToPage = ( { target: { name } } ) => {
+    if(name === 'next' && currentPage !== totalPages)
       return onPageChange(++currentPage);
-    else if(event.target.name === 'back' && currentPage !== 1)
+    else if(name === 'back' && currentPage !== 1)
       return onPageChange(--currentPage);
   };
 

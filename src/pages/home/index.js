@@ -35,12 +35,20 @@ const HomePageContainer = ({
 
   const favouritesCount = favourites.length;
 
-  const handleSearch = event => getCollectionsByKeyword(event.target.keyword.value);
-  const handleOrder = event => getCollectionsByOrder(event.target.value);
+  const handleSearch = ({ target: { keyword: { value } } }) => getCollectionsByKeyword(value);
+
+  const handleOrder = ({ target: { value } } ) => getCollectionsByOrder(value);
+
   const handlePageNavigation = pageNumber => getCollectionsByPage(pageNumber);
+
   const handlePerPage = ({ target: { value } }) => updatePerPageView(+value);
+
   const handleFavourites = id => updateFavourites(id);
-  const handleShowFavourites = () => setFavouritesMode(!favouritesMode);
+  
+  const handleShowFavourites = () => {
+    if(favouritesCount > 0)
+      setFavouritesMode(!favouritesMode);
+  };
 
   return (
     <HomePageStyled>
