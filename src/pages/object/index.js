@@ -10,6 +10,7 @@ import { fetchObject } from '../../utils';
 import { getCollectionsByKeyword } from '../../actions';
 
 const ObjectPageContainer = ({ match: { params : { id } }, getCollectionsByKeyword }) => {
+  
   const [details, setDetails] = useState();
 
   useEffect( () => {

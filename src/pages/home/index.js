@@ -22,6 +22,7 @@ const HomePageContainer = ({
   collections, favourites, totalPages, currentPage, perPage, updatePerPageView, getFavourites, keyword,
   getCollections, getCollectionsByKeyword, getCollectionsByOrder, getCollectionsByPage, updateFavourites
 }) => {
+  
   const [favouritesMode, setFavouritesMode] = useState(false);
 
   useEffect( () => {
@@ -35,15 +36,10 @@ const HomePageContainer = ({
   const favouritesCount = favourites.length;
 
   const handleSearch = event => getCollectionsByKeyword(event.target.keyword.value);
-
   const handleOrder = event => getCollectionsByOrder(event.target.value);
-
   const handlePageNavigation = pageNumber => getCollectionsByPage(pageNumber);
-
-  const handlePerPage = e => updatePerPageView(e.target.value);
-
+  const handlePerPage = ({ target: { value } }) => updatePerPageView(+value);
   const handleFavourites = id => updateFavourites(id);
-
   const handleShowFavourites = () => setFavouritesMode(!favouritesMode);
 
   return (
@@ -66,7 +62,6 @@ const HomePageContainer = ({
             onSearchSubmit={handleSearch}
             onOrderApply={handleOrder}
             search={keyword}
-            // order={order}
           />
         </div>
 

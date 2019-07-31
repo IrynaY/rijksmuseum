@@ -12,8 +12,8 @@ const Tile = ({ id, headerImage, webImage, title, description, onUpdateFavourite
   const [isOpen, setOpen] = useState(false);
   const [isFavourite, setFavourite] = useState(false);
 
-  const handleMouseHover = () => setHover(!isHover);
-
+  const handleMouseHover = () => setHover(true);
+  const handleMouseLeave = () => setHover(false);
   const handleOpenModal = () => setOpen(true);
   const handleCLoseModal = () => setOpen(false);
 
@@ -30,7 +30,7 @@ const Tile = ({ id, headerImage, webImage, title, description, onUpdateFavourite
     <>
       <TileStyled
         onMouseEnter={handleMouseHover}
-        onMouseLeave={handleMouseHover}
+        onMouseLeave={handleMouseLeave}
         onClick={handleOpenModal}
         path={headerImage}
       >
